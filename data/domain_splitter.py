@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-DATA_PATH = "~/Label_The_Sky_2.0/Data/ready/clf/"
+DATA_PATH = "../../Label_The_Sky_2.0/Data/ready/clf/"
 csv = pd.read_csv("./all/clf_90_5_5.csv")
 
 nowise = csv[csv['w1mpro'].isna()]
