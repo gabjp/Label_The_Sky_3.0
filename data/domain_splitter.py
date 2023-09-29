@@ -29,17 +29,25 @@ dist2_test = list(dist2[dist2.split == "test"]["inside_split_order"])
 dist3_test = list(dist3[dist3.split == "test"]["inside_split_order"])
 dist4_test = list(dist4[dist4.split == "test"]["inside_split_order"])
 
+print("Loaded csv", flush=True)
+
 class_train = np.load(DATA_PATH + "clf_90_5_5_class_train.npy")
 images_train = np.load(DATA_PATH + "clf_90_5_5_images_train.npy")
 tabular_train = np.load(DATA_PATH + "clf_90_5_5_tabular_train.npy")
+
+print("Loaded train", flush=True)
 
 class_val = np.load(DATA_PATH + "clf_90_5_5_class_val.npy")
 images_val = np.load(DATA_PATH + "clf_90_5_5_images_val.npy")
 tabular_val = np.load(DATA_PATH + "clf_90_5_5_tabular_val.npy")
 
+print("Loaded val", flush=True)
+
 class_test = np.load(DATA_PATH + "clf_90_5_5_class_test.npy")
 images_test = np.load(DATA_PATH + "clf_90_5_5_images_test.npy")
 tabular_test = np.load(DATA_PATH + "clf_90_5_5_tabular_test.npy")
+
+print("Loaded test", flush=True)
 
 ############################ NO_WISE SPLITS #########################
 
@@ -67,6 +75,7 @@ np.save(nowise_tabular_test, "no_wise/tabular_test.npy")
 np.save(nowise_class_test, "no_wise/class_test.npy")
 np.save(nowise_images_test, "no_wise/images_test.npy")
 
+print("Loaded no_wise", flush=True)
 ############################ DIST_1 SPLITS #########################
 
 dist1_tabular_train = tabular_train[dist1_train]
@@ -93,6 +102,7 @@ np.save(dist1_tabular_test, "domain_1/tabular_test.npy")
 np.save(dist1_class_test, "domain_1/class_test.npy")
 np.save(dist1_images_test, "domain_1/images_test.npy")
 
+print("Loaded domain 1", flush=True)
 ############################ DIST_2 SPLITS #########################
 
 dist2_tabular_train = tabular_train[dist2_train]
@@ -119,6 +129,7 @@ np.save(dist2_tabular_test, "domain_2/tabular_test.npy")
 np.save(dist2_class_test, "domain_2/class_test.npy")
 np.save(dist2_images_test, "domain_2/images_test.npy")
 
+print("Loaded domain 2", flush=True)
 ############################ DIST_3 SPLITS #########################
 
 dist3_tabular_train = tabular_train[dist3_train]
@@ -145,6 +156,7 @@ np.save(dist3_tabular_test, "domain_3/tabular_test.npy")
 np.save(dist3_class_test, "domain_3/class_test.npy")
 np.save(dist3_images_test, "domain_3/images_test.npy")
 
+print("Loaded domain 3", flush=True)
 ############################ DIST_4 SPLITS #########################
 
 dist4_tabular_train = tabular_train[dist4_train]
@@ -170,3 +182,5 @@ np.save(dist4_images_val, "domain_4/images_val.npy")
 np.save(dist4_tabular_test, "domain_4/tabular_test.npy")
 np.save(dist4_class_test, "domain_4/class_test.npy")
 np.save(dist4_images_test, "domain_4/images_test.npy")
+
+print("Loaded domain 4", flush=True)
