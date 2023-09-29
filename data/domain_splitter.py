@@ -63,17 +63,17 @@ nowise_tabular_test = tabular_test[nowise_test]
 nowise_class_test = class_test[nowise_test]
 nowise_images_test = images_test[nowise_test]
 
-np.save(nowise_tabular_train, "no_wise/tabular_train.npy")
-np.save(nowise_class_train, "no_wise/class_train.npy")
-np.save(nowise_images_train, "no_wise/images_train.npy")
+np.save("no_wise/tabular_train.npy", nowise_tabular_train)
+np.save("no_wise/class_train.npy", nowise_class_train)
+np.save("no_wise/images_train.npy", nowise_images_train)
 
-np.save(nowise_tabular_val, "no_wise/tabular_val.npy")
-np.save(nowise_class_val, "no_wise/class_val.npy")
-np.save(nowise_images_val, "no_wise/images_val.npy")
+np.save("no_wise/tabular_val.npy", nowise_tabular_val)
+np.save("no_wise/class_val.npy", nowise_class_val)
+np.save("no_wise/images_val.npy", nowise_images_val)
 
-np.save(nowise_tabular_test, "no_wise/tabular_test.npy")
-np.save(nowise_class_test, "no_wise/class_test.npy")
-np.save(nowise_images_test, "no_wise/images_test.npy")
+np.save("no_wise/tabular_test.npy", nowise_tabular_test)
+np.save("no_wise/class_test.npy", nowise_class_test)
+np.save("no_wise/images_test.npy", nowise_images_test)
 
 print("Loaded no_wise", flush=True)
 ############################ DIST_1 SPLITS #########################
@@ -90,17 +90,17 @@ dist1_tabular_test = tabular_test[dist1_test]
 dist1_class_test = class_test[dist1_test]
 dist1_images_test = images_test[dist1_test]
 
-np.save(dist1_tabular_train, "domain_1/tabular_train.npy")
-np.save(dist1_class_train, "domain_1/class_train.npy")
-np.save(dist1_images_train, "domain_1/images_train.npy")
+np.save("domain_1/tabular_train.npy", dist1_tabular_train)
+np.save("domain_1/class_train.npy", dist1_class_train)
+np.save("domain_1/images_train.npy", dist1_images_train)
 
-np.save(dist1_tabular_val, "domain_1/tabular_val.npy")
-np.save(dist1_class_val, "domain_1/class_val.npy")
-np.save(dist1_images_val, "domain_1/images_val.npy")
+np.save("domain_1/tabular_val.npy", dist1_tabular_val)
+np.save("domain_1/class_val.npy", dist1_class_val)
+np.save("domain_1/images_val.npy", dist1_images_val)
 
-np.save(dist1_tabular_test, "domain_1/tabular_test.npy")
-np.save(dist1_class_test, "domain_1/class_test.npy")
-np.save(dist1_images_test, "domain_1/images_test.npy")
+np.save("domain_1/tabular_test.npy", dist1_tabular_test)
+np.save("domain_1/class_test.npy", dist1_class_test)
+np.save("domain_1/images_test.npy", dist1_images_test)
 
 print("Loaded domain 1", flush=True)
 ############################ DIST_2 SPLITS #########################
@@ -117,17 +117,17 @@ dist2_tabular_test = tabular_test[dist2_test]
 dist2_class_test = class_test[dist2_test]
 dist2_images_test = images_test[dist2_test]
 
-np.save(dist2_tabular_train, "domain_2/tabular_train.npy")
-np.save(dist2_class_train, "domain_2/class_train.npy")
-np.save(dist2_images_train, "domain_2/images_train.npy")
+np.save("domain_2/tabular_train.npy", dist2_tabular_train)
+np.save("domain_2/class_train.npy", dist2_class_train)
+np.save("domain_2/images_train.npy", dist2_images_train)
 
-np.save(dist2_tabular_val, "domain_2/tabular_val.npy")
-np.save(dist2_class_val, "domain_2/class_val.npy")
-np.save(dist2_images_val, "domain_2/images_val.npy")
+np.save("domain_2/tabular_val.npy", dist2_tabular_val)
+np.save("domain_2/class_val.npy", dist2_class_val)
+np.save("domain_2/images_val.npy", dist2_images_val)
 
-np.save(dist2_tabular_test, "domain_2/tabular_test.npy")
-np.save(dist2_class_test, "domain_2/class_test.npy")
-np.save(dist2_images_test, "domain_2/images_test.npy")
+np.save("domain_2/tabular_test.npy", dist2_tabular_test)
+np.save("domain_2/class_test.npy", dist2_class_test)
+np.save("domain_2/images_test.npy", dist2_images_test)
 
 print("Loaded domain 2", flush=True)
 ############################ DIST_3 SPLITS #########################
@@ -144,17 +144,17 @@ dist3_tabular_test = tabular_test[dist3_test]
 dist3_class_test = class_test[dist3_test]
 dist3_images_test = images_test[dist3_test]
 
-np.save(dist3_tabular_train, "domain_3/tabular_train.npy")
-np.save(dist3_class_train, "domain_3/class_train.npy")
-np.save(dist3_images_train, "domain_3/images_train.npy")
+np.save("domain_3/tabular_train.npy", dist3_tabular_train)
+np.save("domain_3/class_train.npy", dist3_class_train)
+np.save("domain_3/images_train.npy", dist3_images_train)
 
-np.save(dist3_tabular_val, "domain_3/tabular_val.npy")
-np.save(dist3_class_val, "domain_3/class_val.npy")
-np.save(dist3_images_val, "domain_3/images_val.npy")
+np.save("domain_3/tabular_val.npy", dist3_tabular_val)
+np.save("domain_3/class_val.npy", dist3_class_val)
+np.save("domain_3/images_val.npy", dist3_images_val)
 
-np.save(dist3_tabular_test, "domain_3/tabular_test.npy")
-np.save(dist3_class_test, "domain_3/class_test.npy")
-np.save(dist3_images_test, "domain_3/images_test.npy")
+np.save("domain_3/tabular_test.npy", dist3_tabular_test)
+np.save("domain_3/class_test.npy", dist3_class_test)
+np.save("domain_3/images_test.npy", dist3_images_test)
 
 print("Loaded domain 3", flush=True)
 ############################ DIST_4 SPLITS #########################
@@ -171,16 +171,16 @@ dist4_tabular_test = tabular_test[dist4_test]
 dist4_class_test = class_test[dist4_test]
 dist4_images_test = images_test[dist4_test]
 
-np.save(dist4_tabular_train, "domain_4/tabular_train.npy")
-np.save(dist4_class_train, "domain_4/class_train.npy")
-np.save(dist4_images_train, "domain_4/images_train.npy")
+np.save("domain_4/tabular_train.npy", dist4_tabular_train)
+np.save("domain_4/class_train.npy", dist4_class_train)
+np.save("domain_4/images_train.npy", dist4_images_train)
 
-np.save(dist4_tabular_val, "domain_4/tabular_val.npy")
-np.save(dist4_class_val, "domain_4/class_val.npy")
-np.save(dist4_images_val, "domain_4/images_val.npy")
+np.save("domain_4/tabular_val.npy", dist4_tabular_val)
+np.save("domain_4/class_val.npy", dist4_class_val)
+np.save("domain_4/images_val.npy", dist4_images_val)
 
-np.save(dist4_tabular_test, "domain_4/tabular_test.npy")
-np.save(dist4_class_test, "domain_4/class_test.npy")
-np.save(dist4_images_test, "domain_4/images_test.npy")
+np.save("domain_4/tabular_test.npy", dist4_tabular_test)
+np.save("domain_4/class_test.npy", dist4_class_test)
+np.save("domain_4/images_test.npy", dist4_images_test)
 
 print("Loaded domain 4", flush=True)
