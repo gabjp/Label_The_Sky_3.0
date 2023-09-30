@@ -169,13 +169,13 @@ def get_loader(dataset, batch_size=64):
         
         else:
             X_train_path = f"data/{dataset}/images_train.npy"
-            y_train_path = f"data/{dataset}/classes_train.npy"
+            y_train_path = f"data/{dataset}/class_train.npy"
 
             X_val_path = f"data/{dataset}/images_val.npy"
-            y_val_path = f"data/{dataset}/classes_val.npy"
+            y_val_path = f"data/{dataset}/class_val.npy"
 
             X_test_path = f"data/{dataset}/images_test.npy"
-            y_test_path = f"data/{dataset}/classes_test.npy"
+            y_test_path = f"data/{dataset}/class_test.npy"
 
         train_set = FromNpyDataset(X_train_path, y_train_path, is_unl = dataset=="unl", transform=transforms.ToTensor())
         val_set = FromNpyDataset(X_val_path, y_val_path,  is_unl = dataset=="unl", transform=transforms.ToTensor())
@@ -187,13 +187,13 @@ def get_loader(dataset, batch_size=64):
         test_sets = []
         for domain in ["domain_1", "domain_2", "domain_3", "domain_4"]:
             X_train_path = f"data/{dataset}/images_train.npy"
-            y_train_path = f"data/{dataset}/classes_train.npy"
+            y_train_path = f"data/{dataset}/class_train.npy"
 
             X_val_path = f"data/{dataset}/images_val.npy"
-            y_val_path = f"data/{dataset}/classes_val.npy"
+            y_val_path = f"data/{dataset}/class_val.npy"
 
             X_test_path = f"data/{dataset}/images_test.npy"
-            y_test_path = f"data/{dataset}/classes_test.npy"
+            y_test_path = f"data/{dataset}/class_test.npy"
 
             train_sets.append(FromNpyDataset(X_train_path, y_train_path, is_unl = dataset=="unl",  transform=transforms.ToTensor()))
             val_sets.append(FromNpyDataset(X_val_path, y_val_path,  is_unl = dataset=="unl", transform=transforms.ToTensor()))
