@@ -61,7 +61,8 @@ def main():
     #load pretrained model
     model = VGG16(3, args.dropout)
     checkpoint = torch.load(args.checkpoint_path)
-    load_dict =  {k: checkpoint['model_state_dict'][k] for k in checkpoint['model_state_dict'].keys() if 'features' in k}
+    #load_dict =  {k: checkpoint['model_state_dict'][k] for k in checkpoint['model_state_dict'].keys() if 'features' in k}
+    load_dict = checkpoint['model_state_dict']
     model.load_state_dict(load_dict, strict=False)
 
     #train - WARMUP
@@ -215,6 +216,7 @@ def main():
     load_dict =  checkpoint["model_state_dict"]
     model.load_state_dict(load_dict) 
     model.eval()
+    model = model.to(device)
 
     for loader, name in zip((val_loader, test_loader), ("Validation:", "Test:")):
         image_list = []
