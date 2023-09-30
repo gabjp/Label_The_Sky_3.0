@@ -23,7 +23,7 @@ device = (
     if torch.backends.mps.is_available()
     else "cpu"
 )
-print(f"Using {device} device")
+print(f"Using {device} device", flush=True)
   
 class CustomMAE(nn.Module):
     def __init__(self):
@@ -37,7 +37,7 @@ class CustomMAE(nn.Module):
 
 def main():
     args = parser.parse_args()
-    print(args)
+    print(args, flush=True)
 
     if not os.path.exists(args.save_dir):
         os.makedirs(args.save_dir)
@@ -81,7 +81,7 @@ def main():
             num_batch_count +=1
 
         val_loss = test_l(test_loader,model, criterion, device)
-        print(f"[{n_epoch+1}/{args.epochs}] - Training loss: {epoch_train_loss/num_batch_count} - Validation loss: {val_loss}")
+        print(f"[{n_epoch+1}/{args.epochs}] - Training loss: {epoch_train_loss/num_batch_count} - Validation loss: {val_loss}", flush=True)
         train_loss.append(epoch_train_loss/num_batch_count)
         test_loss.append(val_loss)
         if val_loss < best_loss:
