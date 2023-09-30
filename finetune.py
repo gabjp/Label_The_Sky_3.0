@@ -66,6 +66,7 @@ def main():
 
     #train - WARMUP
 
+    print(np.argmax(train_loader.dataset._y))
     weights = compute_class_weight(class_weight='balanced', classes=[0,1,2], y=np.argmax(train_loader.dataset._y))
     print(f"Weights: {weights}")
 
