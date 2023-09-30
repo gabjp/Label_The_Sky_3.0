@@ -222,4 +222,4 @@ def compute_f1_score(loader, model, device):
     _, predicted = torch.max(out, 1)
     _, true = torch.max(labels, 1)
     model.train()
-    return f1_score(true.numpy(), predicted.numpy(), average='macro')
+    return f1_score(true.cpu().numpy(), predicted.cpu().numpy(), average='macro')
