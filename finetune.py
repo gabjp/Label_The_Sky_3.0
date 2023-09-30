@@ -6,6 +6,7 @@ import os
 import matplotlib.pyplot as plt
 from sklearn.utils.class_weight import compute_class_weight
 from sklearn.metrics import classification_report
+import numpy as np
 
 
 parser = argparse.ArgumentParser(description='Pretrain magnitude task')
@@ -65,7 +66,7 @@ def main():
 
     #train - WARMUP
 
-    weights = compute_class_weight(class_weight='balanced', classes=[0,1,2], y=train_loader.dataset._y)
+    weights = compute_class_weight(class_weight='balanced', classes=[0,1,2], y=np.argmax(train_loader.dataset._y))
     print(f"Weights: {weights}")
 
     model = model.to(device)
