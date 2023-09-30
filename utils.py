@@ -60,7 +60,7 @@ class VGG16(nn.Module):
 
     self.fc = nn.Sequential(
         nn.Dropout(dropout),
-        nn.Linear(1024, 512),
+        nn.Linear(512, 512),
         nn.ReLU())
 
     self.fc1 = nn.Sequential(
@@ -73,14 +73,10 @@ class VGG16(nn.Module):
 
   def forward(self, x):
     out = self.features(x)
-    print(out.shape, flush=True)
-    out = torch.reshape(out, (-1, 1024))
+    out = torch.reshape(out, (-1, 512))
     out = self.fc(out)
-    print(out.shape, flush=True)
     out = self.fc1(out)
-    print(out.shape, flush=True)
     out = self.fc2(out)
-    print(out.shape, flush=True)
     return out
   
 def test(testloader, model, criterion, device):
