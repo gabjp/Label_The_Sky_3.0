@@ -145,7 +145,7 @@ class FromNpyDataset(torch.utils.data.Dataset):
   def __getitem__(self, index):
     x = self._x[index, :]
     y = self._y[index, :]
-    x = self.transform(x)
+    x = self.transform(x).float()
     #y = self.transform(y)
     return x, y
 
