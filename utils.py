@@ -3,6 +3,7 @@ from torch import nn
 import numpy as np
 from torchvision import transforms
 from torch.utils.data import DataLoader, ConcatDataset
+from sklearn.metrics import f1_score
 # Implementação da VGG16 com batch normalization e dropout.
 # Fonte: https://blog.paperspace.com/vgg-from-scratch-pytorch/
 
@@ -207,3 +208,11 @@ def get_loader(dataset, batch_size=64):
     test_loader = DataLoader(test_set, batch_size=batch_size, shuffle=False, num_workers=2, pin_memory=True)
 
     return train_loader, val_loader, test_loader
+
+def compute_f1_score(loader, model, device):
+   model.eval()
+   images = torch.Tensor(loader.dataset._x).to(device)
+   out = model(images)
+   _, predicted = torch.max(out, 1)
+   model.test()
+   return f1_score(loader.dataset._y, predicted.numpy(), average='macro')

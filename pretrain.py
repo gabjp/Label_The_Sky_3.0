@@ -28,7 +28,7 @@ print(f"Using {device} device", flush=True)
 class CustomMAE(nn.Module):
     def __init__(self):
         super(CustomMAE, self).__init__()
-        self.mae = mae = nn.L1Loss()
+        self.mae = nn.L1Loss()
 
     def forward(self, inputs, targets):
         mvalue = 99/35
