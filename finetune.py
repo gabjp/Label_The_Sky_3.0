@@ -11,6 +11,7 @@ import numpy as np
 
 parser = argparse.ArgumentParser(description='Pretrain magnitude task')
 
+parser.add_argument('--load_fc',default = 0, type=int, help="Load fully connected layers")
 parser.add_argument('--save_dir', help='The directory used to save the trained models', default=None, type=str)
 parser.add_argument('--batch_size', type=int, default=64, help='batch size')
 parser.add_argument('--lr', default=1e-5, type=float, help='learning rate')
@@ -61,7 +62,10 @@ def main():
     #load pretrained model
     model = VGG16(3, args.dropout)
     checkpoint = torch.load(args.checkpoint_path)
-    load_dict =  {k: checkpoint['model_state_dict'][k] for k in checkpoint['model_state_dict'].keys() if 'fc2' not in k}
+    if args.load_fc == 1:
+        load_dict =  {k: checkpoint['model_state_dict'][k] for k in checkpoint['model_state_dict'].keys() if 'fc2' not in k}
+    else:
+        load_dict =  {k: checkpoint['model_state_dict'][k] for k in checkpoint['model_state_dict'].keys() if 'features' in k}
     model.load_state_dict(load_dict, strict=False)
 
     #train - WARMUP
