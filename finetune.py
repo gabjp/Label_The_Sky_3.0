@@ -169,7 +169,7 @@ def main():
         train_acc.append(total_correct / total_samples * 100)
 
         val_loss, val_acc = test(val_loader,model, criterion, device)
-        print(f"[{n_epoch+1}/{args.w_epochs}] - Validation loss: {val_loss} - Validation accuracy: {val_acc}")
+        print(f"[{n_epoch+1}/{args.epochs}] - Validation loss: {val_loss} - Validation accuracy: {val_acc}")
         test_loss.append(val_loss)
         test_acc.append(val_acc)
 
@@ -211,18 +211,25 @@ def main():
 
     #get validation/test metrics
     model = VGG16(3, args.dropout)
-    checkpoint = torch.load(args.checkpoint_path)
+    checkpoint = torch.load(args.save_dir + "/checkpoint.pth")
     load_dict =  checkpoint["model_state_dict"]
     model.load_state_dict(load_dict) 
     model.eval()
 
     for loader, name in zip((val_loader, test_loader), ("Validation:", "Test:")):
-        images = torch.Tensor(loader.dataset._x).to(device)
+        image_list = []
+        labels_list = []
+        for image, label in loader:
+            image_list.append(image)
+            labels_list.append(label)
+        images = torch.concat(image_list).to(device)
+        labels = torch.concat(labels_list).to(device)
         out = model(images)
-        _, predicted = torch.max(out, 1).numpy()
-        true = np.argmax(loader.dataset._y, axis=1)
+        _, predicted = torch.max(out, 1)
+        _, true = torch.max(labels, 1)
+
         print(name)
-        print(classification_report(true, predicted, labels = ["QSO", "STAR", "GAL"]))
+        print(classification_report(true.cpu().numpy(), predicted.cpu().numpy(), labels = ["QSO", "STAR", "GAL"]))
     # CHANGE TO EVAL MODE
     return
 
