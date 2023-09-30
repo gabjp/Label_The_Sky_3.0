@@ -146,7 +146,7 @@ class FromNpyDataset(torch.utils.data.Dataset):
     x = self._x[index, :]
     y = self._y[index, :]
     x = self.transform(x).float()
-    #y = self.transform(y)
+    y = torch.Tensor(y).float()
     return x, y
 
 def get_loader(dataset, batch_size=64):
