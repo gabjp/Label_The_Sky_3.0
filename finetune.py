@@ -232,8 +232,8 @@ def main():
         _, predicted = torch.max(out, 1)
         _, true = torch.max(labels, 1)
 
-        print(predicted)
-        print(true)
+        print(predicted.cpu().numpy())
+        print(true.cpu().numpy())
         
         print(name)
         print(classification_report(true.cpu().numpy(), predicted.cpu().numpy(), labels = ["QSO", "STAR", "GAL"]))
