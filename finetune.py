@@ -110,7 +110,7 @@ def main():
             epoch_train_loss += loss.item()
             print(predicted.shape)
             print(labels.shape)
-            total_correct += (predicted == labels).sum().item()
+            total_correct += (predicted == torch.argmax(labels, dim=1)).sum().item()
             total_samples += labels.size(0)
             num_batch_count +=1
 
@@ -162,7 +162,7 @@ def main():
             _, predicted = torch.max(out, 1)
 
             epoch_train_loss += loss.item()
-            total_correct += (predicted == labels).sum().item()
+            total_correct += ((predicted == torch.argmax(labels, dim=1))).sum().item()
             total_samples += labels.size(0)
             num_batch_count +=1
 
