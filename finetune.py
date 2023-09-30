@@ -236,7 +236,7 @@ def main():
         print(true.cpu().numpy())
         
         print(name)
-        print(classification_report(true.cpu().numpy(), predicted.cpu().numpy(), labels = ["QSO", "STAR", "GAL"]))
+        print(classification_report(list(true.cpu().numpy()), list(predicted.cpu().numpy()), labels = ["QSO", "STAR", "GAL"]))
     # CHANGE TO EVAL MODE
     return
 
