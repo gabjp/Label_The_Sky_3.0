@@ -97,7 +97,7 @@ def test(testloader, model, criterion, device):
     _, predicted = torch.max(out, 1)
 
     epoch_loss += loss.item()
-    total_correct += (predicted == label).sum().item()
+    total_correct += ((predicted == torch.argmax(label, dim=1))).sum().item()
     total_samples += label.size(0)
     num_batch_count +=1
 
