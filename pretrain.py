@@ -72,8 +72,8 @@ def main():
 
             opt.zero_grad()
             out = model(images)
-            print(labels.shape)
-            print(out.shape)
+            print(labels.shape, flush=True)
+            print(out.shape, flush=True)
 
             loss = criterion(out, labels)
             loss.backward()
