@@ -57,7 +57,6 @@ def main():
 
     #load data
     train_loader, val_loader, test_loader = get_loader(args.data, args.batch_size)
-    print(train_loader.dataset._x.shape)
 
     #load pretrained model
     model = VGG16(3, args.dropout)
@@ -98,8 +97,6 @@ def main():
         for i, (images, labels) in enumerate(train_loader):
             images = images.to(device)
             labels = labels.to(device)
-
-            print(images.shape)
 
             opt.zero_grad()
             out = model(images)

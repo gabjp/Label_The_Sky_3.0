@@ -210,10 +210,16 @@ def get_loader(dataset, batch_size=64):
     return train_loader, val_loader, test_loader
 
 def compute_f1_score(loader, model, device):
-   model.eval()
-   images = torch.Tensor(loader.dataset._x).to(device)
-   print(images.shape)
-   out = model(images)
-   _, predicted = torch.max(out, 1)
-   model.train()
-   return f1_score(np.argmax(loader.dataset._y, axis=1), predicted.numpy(), average='macro')
+    model.eval()
+    image_list = []
+    labels_list = []
+    for image, label in loader:
+        image_list.append(image)
+        labels_list.append(label)
+    images = torch.concat(image_list).to(device)
+    labels = torch.concat(labels_list).to(device)
+    out = model(images)
+    _, predicted = torch.max(out, 1)
+    _, true = torch.max(labels, 1)
+    model.train()
+    return f1_score(true.numpy(), predicted.numpy(), average='macro')
