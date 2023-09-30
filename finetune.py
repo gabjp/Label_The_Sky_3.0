@@ -66,7 +66,7 @@ def main():
 
     #train - WARMUP
 
-    weights = compute_class_weight(class_weight='balanced', classes=[0,1,2], y=np.argmax(train_loader.dataset._y, axis=1))
+    weights = torch.Tensor(compute_class_weight(class_weight='balanced', classes=[0,1,2], y=np.argmax(train_loader.dataset._y, axis=1))).to(device)
     print(f"Weights: {weights}")
 
     model = model.to(device)
