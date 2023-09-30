@@ -61,7 +61,7 @@ def main():
     model = VGG16(3, args.dropout)
     checkpoint = torch.load(args.checkpoint_path)
     load_dict =  {k: checkpoint['model_state_dict'][k] for k in checkpoint['model_state_dict'].keys() if 'features' in k}
-    model.load_state_dict(load_dict)
+    model.load_state_dict(load_dict, strict=False)
 
     #train - WARMUP
 
