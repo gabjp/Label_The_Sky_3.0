@@ -98,6 +98,8 @@ def main():
             images = images.to(device)
             labels = labels.to(device)
 
+            print(images.shape)
+
             opt.zero_grad()
             out = model(images)
 
