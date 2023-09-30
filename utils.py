@@ -73,10 +73,14 @@ class VGG16(nn.Module):
 
   def forward(self, x):
     out = self.features(x)
+    print(out.shape, flush=True)
     out = torch.reshape(out, (-1, 1024))
     out = self.fc(out)
+    print(out.shape, flush=True)
     out = self.fc1(out)
+    print(out.shape, flush=True)
     out = self.fc2(out)
+    print(out.shape, flush=True)
     return out
   
 def test(testloader, model, criterion, device):
