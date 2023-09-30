@@ -28,6 +28,15 @@ parser.add_argument('--w_epochs', default=10, type=int, help='warmup number of t
 parser.add_argument('--w_dropout', default=0.3, type=float, help='warmup dropout')
 parser.add_argument('--w_optimizer', default="adam", type=str, help="warmup otimizer algorithm")
 
+class CustomMAE(nn.Module):
+    def __init__(self):
+        super(CustomMAE, self).__init__()
+        self.mae = nn.L1Loss()
+
+    def forward(self, inputs, targets):
+        mvalue = 99/35
+        mask = torch.tensor(targets != mvalue, dtype=torch.float32)
+        return self.mae(inputs*mask, targets*mask)
 
 device = (
     "cuda"
