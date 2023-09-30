@@ -125,9 +125,10 @@ def test_l(testloader, model, criterion, device):
   return loss
 
 class FromNpyDataset(torch.utils.data.Dataset):
-  def __init__(self, X_path, y_path, is_unl = False):
+  def __init__(self, X_path, y_path, is_unl = False, transform=None):
     super(FromNpyDataset, self).__init__()
     # store the raw tensors
+    self.transform = transform
     
     self._x = np.load(X_path)
     if is_unl:
@@ -144,6 +145,8 @@ class FromNpyDataset(torch.utils.data.Dataset):
   def __getitem__(self, index):
     x = self._x[index, :]
     y = self._y[index, :]
+    x = self.transform(x)
+    y = self.transform(y)
     return x, y
 
 def get_loader(dataset, batch_size=64):
@@ -173,9 +176,9 @@ def get_loader(dataset, batch_size=64):
             X_test_path = f"data/{dataset}/images_test.npy"
             y_test_path = f"data/{dataset}/classes_test.npy"
 
-        train_set = FromNpyDataset(X_train_path, y_train_path, is_unl = dataset=="unl", train=True, transform=transforms.ToTensor())
-        val_set = FromNpyDataset(X_val_path, y_val_path, train=True, is_unl = dataset=="unl", transform=transforms.ToTensor())
-        test_set = FromNpyDataset(X_test_path, y_test_path, train=False, is_unl = dataset=="unl", transform=transforms.ToTensor())
+        train_set = FromNpyDataset(X_train_path, y_train_path, is_unl = dataset=="unl", transform=transforms.ToTensor())
+        val_set = FromNpyDataset(X_val_path, y_val_path,  is_unl = dataset=="unl", transform=transforms.ToTensor())
+        test_set = FromNpyDataset(X_test_path, y_test_path,  is_unl = dataset=="unl", transform=transforms.ToTensor())
 
     else:
         train_sets = []
@@ -191,9 +194,9 @@ def get_loader(dataset, batch_size=64):
             X_test_path = f"data/{dataset}/images_test.npy"
             y_test_path = f"data/{dataset}/classes_test.npy"
 
-            train_sets.append(FromNpyDataset(X_train_path, y_train_path, is_unl = dataset=="unl", train=True, transform=transforms.ToTensor()))
-            val_sets.append(FromNpyDataset(X_val_path, y_val_path, train=True, is_unl = dataset=="unl", transform=transforms.ToTensor()))
-            test_sets.append(FromNpyDataset(X_test_path, y_test_path, train=False, is_unl = dataset=="unl", transform=transforms.ToTensor()))
+            train_sets.append(FromNpyDataset(X_train_path, y_train_path, is_unl = dataset=="unl",  transform=transforms.ToTensor()))
+            val_sets.append(FromNpyDataset(X_val_path, y_val_path,  is_unl = dataset=="unl", transform=transforms.ToTensor()))
+            test_sets.append(FromNpyDataset(X_test_path, y_test_path,  is_unl = dataset=="unl", transform=transforms.ToTensor()))
         
         train_set = ConcatDataset(train_sets)
         val_set = ConcatDataset(val_sets)
