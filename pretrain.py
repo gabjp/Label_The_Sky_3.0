@@ -52,7 +52,7 @@ def main():
     model = model.to(device)
     criterion = CustomMAE()
     if args.optimizer == "adam":
-        opt = torch.optim.Adam(model.parameters(), lr=args.lr, momentum=args.momentum, weight_decay=args.weight_decay)
+        opt = torch.optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
     else:
         opt = torch.optim.SGD(model.parameters(), lr=args.lr, momentum=args.momentum, weight_decay=args.weight_decay)
 
