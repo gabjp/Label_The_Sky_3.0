@@ -27,7 +27,6 @@ parser.add_argument('--w_lr', default=1e-4, type=float, help='warmup learning ra
 parser.add_argument('--w_momentum', default=0.9, type=float, help='warmup momentum')
 parser.add_argument('--w_weight_decay', default=0.0007, type=float, help='warmup weight decay')
 parser.add_argument('--w_epochs', default=10, type=int, help='warmup number of total epochs to run')
-parser.add_argument('--w_dropout', default=0.3, type=float, help='warmup dropout')
 parser.add_argument('--w_optimizer', default="adam", type=str, help="warmup otimizer algorithm")
 
 class CustomMAE(nn.Module):
@@ -233,6 +232,9 @@ def main():
         _, predicted = torch.max(out, 1)
         _, true = torch.max(labels, 1)
 
+        print(predicted)
+        print(true)
+        
         print(name)
         print(classification_report(true.cpu().numpy(), predicted.cpu().numpy(), labels = ["QSO", "STAR", "GAL"]))
     # CHANGE TO EVAL MODE
