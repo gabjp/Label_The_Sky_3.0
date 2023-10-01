@@ -70,7 +70,8 @@ def main():
     domain_2 = torch.load("experiments/finetune_domain_2/checkpoint.pth")["model_state_dict"]
     domain_3 = torch.load("experiments/finetune_domain_3/checkpoint.pth")["model_state_dict"]
     domain_4 = torch.load("experiments/finetune_domain_4/checkpoint.pth")["model_state_dict"]
-    load_dict = merge_state_dicts([domain_1,domain_2,domain_3,domain_4], args.weights, args.weights)
+    coefs = list(map(float, args.weights.split(",")))
+    load_dict = merge_state_dicts([domain_1,domain_2,domain_3,domain_4], coefs, coefs)
     model.load_state_dict(load_dict, strict=False)
 
     #train - WARMUP
