@@ -165,6 +165,7 @@ class FullDataset(torch.utils.data.Dataset):
        y_list.append(temp_2)
     self._x = np.concatenate(x_list)
     self._y = np.concatenate(y_list)
+    self.transform = transforms.ToTensor()
 
   def __len__(self):
     # a DataSet must know it size
@@ -173,7 +174,7 @@ class FullDataset(torch.utils.data.Dataset):
   def __getitem__(self, index):
     x = self._x[index, :]
     y = self._y[index, :]
-    x = torch.Tensor(x).float()
+    x = self.transform(x).float()
     y = torch.Tensor(y).float()
     return x, y
 
