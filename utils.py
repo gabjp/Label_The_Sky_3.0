@@ -149,6 +149,33 @@ class FromNpyDataset(torch.utils.data.Dataset):
     x = self.transform(x).float()
     y = torch.Tensor(y).float()
     return x, y
+  
+class FullDataset(torch.utils.data.Dataset):
+  def __init__(self, str):
+    super(FromNpyDataset, self).__init__()
+    # store the raw tensors
+    
+    x_list = []
+    y_list = []
+    for domain in ['domain_1','domain_2','domain_3','domain_4']:
+       x_list.append(np.load(f"data/{domain}/images_{str}.npy"))
+       temp = np.load(f"data/{domain}/class_{str}.npy")
+       temp_2 = np.zeros((temp.size, temp.max() + 1))
+       temp_2[np.arange(temp.size), temp] = 1
+       y_list.append(temp_2)
+    self._x = np.concatenate(x_list)
+    self._y = np.concatenate(y_list)
+
+  def __len__(self):
+    # a DataSet must know it size
+    return self._x.shape[0]
+
+  def __getitem__(self, index):
+    x = self._x[index, :]
+    y = self._y[index, :]
+    x = torch.Tensor(x).float()
+    y = torch.Tensor(y).float()
+    return x, y
 
 def get_loader(dataset, batch_size=64):
 
@@ -182,26 +209,10 @@ def get_loader(dataset, batch_size=64):
         test_set = FromNpyDataset(X_test_path, y_test_path,  is_unl = dataset=="unl", transform=transforms.ToTensor())
 
     else:
-        train_sets = []
-        val_sets = []
-        test_sets = []
-        for domain in ["domain_1", "domain_2", "domain_3", "domain_4"]:
-            X_train_path = f"data/{domain}/images_train.npy"
-            y_train_path = f"data/{domain}/class_train.npy"
-
-            X_val_path = f"data/{domain}/images_val.npy"
-            y_val_path = f"data/{domain}/class_val.npy"
-
-            X_test_path = f"data/{domain}/images_test.npy"
-            y_test_path = f"data/{domain}/class_test.npy"
-
-            train_sets.append(FromNpyDataset(X_train_path, y_train_path, is_unl = dataset=="unl",  transform=transforms.ToTensor()))
-            val_sets.append(FromNpyDataset(X_val_path, y_val_path,  is_unl = dataset=="unl", transform=transforms.ToTensor()))
-            test_sets.append(FromNpyDataset(X_test_path, y_test_path,  is_unl = dataset=="unl", transform=transforms.ToTensor()))
         
-        train_set = ConcatDataset(train_sets)
-        val_set = ConcatDataset(val_sets)
-        test_set = ConcatDataset(test_sets)
+        train_set = FullDataset('train')
+        val_set = FullDataset('val')
+        test_set = FullDataset('test')
 
     train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=True, num_workers=2, drop_last=False, pin_memory=True)
     val_loader = DataLoader(val_set, batch_size=batch_size, shuffle=False, num_workers=2, pin_memory=True)
