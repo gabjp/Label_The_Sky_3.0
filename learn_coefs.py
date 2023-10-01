@@ -23,9 +23,7 @@ parser.add_argument('--outer-lr', type=float, default=1e-4) # Outer loop learnin
 parser.add_argument('--inner-steps', type=int, default=10) # Inner loop steps
 parser.add_argument('--outer-steps', type=int, default=60) # Outer loop steps
 parser.add_argument('--batch-size', type=int, default=64) # Number of examples to compute gradient
-parser.add_argument("--data-size", default=1, type=float) # Data size
 parser.add_argument('--dataset', default='no_wise', type=str) # Dataset
-parser.add_argument('--data', default='data/cifar10', type=str) # Dataset location
 parser.add_argument('--workers', default=2, type=int) # Dataset loading workers
 parser.add_argument('--reinit-fc', action='store_true')
 parser.add_argument('--weight-decay', default=1e-4, type=float, help='weight decay')
@@ -79,7 +77,7 @@ def main():
     
     # Load Data:
 
-    train_loader, val_loader, _ = get_loader(args.data, args.batch_size)
+    train_loader, val_loader, _ = get_loader(args.dataset, args.batch_size)
     
     # Load Models:
 
