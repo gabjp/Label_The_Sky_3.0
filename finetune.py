@@ -63,8 +63,10 @@ def main():
     checkpoint = torch.load(args.checkpoint_path)
     if args.load_fc == 1:
         load_dict =  {k: checkpoint['model_state_dict'][k] for k in checkpoint['model_state_dict'].keys() if 'fc2' not in k}
-    else:
+    elif args.load_fc == 0:
         load_dict =  {k: checkpoint['model_state_dict'][k] for k in checkpoint['model_state_dict'].keys() if 'features' in k}
+    else:
+        load_dict = checkpoint['model_state_dict']
     model.load_state_dict(load_dict, strict=False)
 
     #train - WARMUP
