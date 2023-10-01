@@ -226,7 +226,7 @@ def main():
         pred_list = []
         labels_list = []
         for image, label in loader:
-            pred_list.append(model(image))
+            pred_list.append(model(image.to(device)))
             labels_list.append(label)
 
         out = torch.concat(pred_list)
