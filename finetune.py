@@ -231,12 +231,9 @@ def main():
         out = model(images)
         _, predicted = torch.max(out, 1)
         _, true = torch.max(labels, 1)
-
-        print(predicted.cpu().numpy())
-        print(true.cpu().numpy())
         
         print(name)
-        print(classification_report(list(true.cpu().numpy()), list(predicted.cpu().numpy()), target_names = ["QSO", "STAR", "GAL"]))
+        print(classification_report(list(true.cpu().numpy()), list(predicted.cpu().numpy()),digits = 4, target_names = ["QSO", "STAR", "GAL"]))
     # CHANGE TO EVAL MODE
     return
 
