@@ -223,14 +223,14 @@ def main():
     model = model.to(device)
 
     for loader, name in zip((val_loader, test_loader), ("Validation:", "Test:")):
-        image_list = []
+        pred_list = []
         labels_list = []
         for image, label in loader:
-            image_list.append(image)
+            pred_list.append(model(image))
             labels_list.append(label)
-        images = torch.concat(image_list).to(device)
-        labels = torch.concat(labels_list).to(device)
-        out = model(images)
+
+        out = torch.concat(pred_list)
+        labels = torch.concat(labels_list)
         _, predicted = torch.max(out, 1)
         _, true = torch.max(labels, 1)
         
