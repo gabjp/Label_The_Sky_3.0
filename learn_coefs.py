@@ -181,13 +181,13 @@ def main():
             with torch.no_grad():
                 grad = torch.autograd.grad(loss, coefs, create_graph=False)
 
-                acc = accuracy(func, combined_weights, buffers, val_loader)
+                #acc = accuracy(func, combined_weights, buffers, val_loader)
                 f1 = compute_f1_score(func, combined_weights, buffers, val_loader)
                 if f1 > best_f1:
                     best_f1 = f1
                     best_coefs = coefs.detach().clone()
 
-                print(f"Inner loop validation accuracy: {round(acc,2)}")
+                #print(f"Inner loop validation accuracy: {round(acc,2)}")
                 print(f"Inner loop validation f1: {round(f1,4)*100}")
 
                 if o_step == 0:
