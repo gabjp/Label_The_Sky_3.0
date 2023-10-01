@@ -10,6 +10,8 @@ import torch.nn as nn
 from functorch import make_functional_with_buffers, vmap, grad
 from utils import get_loader, VGG16
 from sklearn.metrics import f1_score
+from sklearn.utils.class_weight import compute_class_weight
+
 
 
 # 1) Read parameters
@@ -22,7 +24,7 @@ parser.add_argument('--inner-steps', type=int, default=10) # Inner loop steps
 parser.add_argument('--outer-steps', type=int, default=60) # Outer loop steps
 parser.add_argument('--batch-size', type=int, default=64) # Number of examples to compute gradient
 parser.add_argument("--data-size", default=1, type=float) # Data size
-parser.add_argument('--dataset', default='cifar10', type=str) # Dataset
+parser.add_argument('--dataset', default='no_wise', type=str) # Dataset
 parser.add_argument('--data', default='data/cifar10', type=str) # Dataset location
 parser.add_argument('--workers', default=2, type=int) # Dataset loading workers
 parser.add_argument('--reinit-fc', action='store_true')
@@ -100,9 +102,9 @@ def main():
     train_model.to(device)
 
     print('load success') 
-
+    
     # 3) MAML
-
+    weights = torch.Tensor(compute_class_weight(class_weight='balanced', classes=[0,1,2], y=np.argmax(train_loader.dataset._y, axis=1))).to(device)
     _, p1, buffer_1 = make_functional_with_buffers(models[permutation[0]])
     _, p2, buffer_2 = make_functional_with_buffers(models[permutation[1]])
     _, p3, buffer_3 = make_functional_with_buffers(models[permutation[2]])
@@ -110,7 +112,7 @@ def main():
     func, params, buffers = make_functional_with_buffers(train_model)
     n_layers = len(p1)
 
-    criterion = nn.CrossEntropyLoss() 
+    criterion = nn.CrossEntropyLoss(weight=weights) 
 
     func.train()
 
