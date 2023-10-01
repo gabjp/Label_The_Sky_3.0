@@ -152,7 +152,7 @@ class FromNpyDataset(torch.utils.data.Dataset):
   
 class FullDataset(torch.utils.data.Dataset):
   def __init__(self, str):
-    super(FromNpyDataset, self).__init__()
+    super(FullDataset, self).__init__()
     # store the raw tensors
     
     x_list = []
