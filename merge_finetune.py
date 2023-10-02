@@ -104,6 +104,13 @@ def main():
         total_samples = 0
         num_batch_count = 0
 
+        if n_epoch % 20 == 0 and n_epoch != 0:
+            if (n_epoch // 20) % 2 == 0:
+                opt.param_groups[0]["lr"] = opt.param_groups[0]["lr"] / 5
+            else:
+                opt.param_groups[0]["lr"] = opt.param_groups[0]["lr"] / 2
+            print(opt.param_groups[0]["lr"])
+
         for i, (images, labels) in enumerate(train_loader):
             images = images.to(device)
             labels = labels.to(device)
