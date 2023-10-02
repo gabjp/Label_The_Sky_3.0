@@ -207,7 +207,7 @@ def main():
     print(f"Softmax coefs: {s_coefs}")
     n_coefs = best_coefs / torch.sum(best_coefs)
     print(f"Normalized coefs: {n_coefs}")
-    print(f"Inner loop accuracy: {best_acc}")
+    print(f"Inner loop accuracy: {best_f1}")
 
 if __name__ == "__main__":
     main()
