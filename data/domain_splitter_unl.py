@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-DATA_PATH = "/Label_The_Sky_3.0/data/unl"
+DATA_PATH = "./unl/"
 csv = pd.read_csv("./all/unl_w99.csv")
 
 dist1 = csv.dropna().sort_values("r_iso").iloc[0:58829]
