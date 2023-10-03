@@ -15,6 +15,7 @@ parser.add_argument('--weight_decay', default=1e-4, type=float, help='weight dec
 parser.add_argument('--epochs', default=100, type=int, help='number of total epochs to run')
 parser.add_argument('--dropout', default=0.3, type=float, help='dropout')
 parser.add_argument('--optimizer', default="adam", type=str, help="otimizer algorithm")
+parser.add_argument('--data', default="no_wise", type=str, help="dataset")
 
 device = (
     "cuda"
@@ -43,7 +44,7 @@ def main():
         os.makedirs(args.save_dir)
 
     #LOAD DATA
-    train_loader, val_loader, test_loader = get_loader("unl", args.batch_size)
+    train_loader, val_loader, test_loader = get_loader(args.data, args.batch_size)
 
     #LOAD MODEL
     model = VGG16(12, args.dropout)

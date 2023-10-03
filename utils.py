@@ -180,7 +180,7 @@ class FullDataset(torch.utils.data.Dataset):
 
 def get_loader(dataset, batch_size=64):
 
-    if dataset not in ["unl", "domain_1", "domain_2", "domain_3", "domain_4", "no_wise", "full"]:
+    if dataset not in ["unl", "domain_1", "domain_2", "domain_3", "domain_4", "no_wise", "full", "unl_domain_1", "unl_domain_2", "unl_domain_3", "unl_domain_4"]:
        return None  
     
     if dataset != "full":
@@ -195,6 +195,17 @@ def get_loader(dataset, batch_size=64):
             X_test_path = f"data/{dataset}/unl_w99_images_test.npy"
             y_test_path = f"data/{dataset}/unl_w99_tabular_test.npy"
         
+        elif "unl_domain_" in dataset:
+          X_train_path = f"data/unl/domain_{dataset[-1]}/images_train.npy"
+          y_train_path = f"data/unl/domain_{dataset[-1]}/tabular_train.npy"
+
+          X_val_path = f"data/unl/domain_{dataset[-1]}/images_val.npy"
+          y_val_path = f"data/unl/domain_{dataset[-1]}/tabular_val.npy"
+
+          X_test_path = f"data/unl/domain_{dataset[-1]}/images_test.npy"
+          y_test_path = f"data/unl/domain_{dataset[-1]}/tabular_test.npy"
+           
+        
         else:
             X_train_path = f"data/{dataset}/images_train.npy"
             y_train_path = f"data/{dataset}/class_train.npy"
@@ -205,9 +216,9 @@ def get_loader(dataset, batch_size=64):
             X_test_path = f"data/{dataset}/images_test.npy"
             y_test_path = f"data/{dataset}/class_test.npy"
 
-        train_set = FromNpyDataset(X_train_path, y_train_path, is_unl = dataset=="unl", transform=transforms.ToTensor())
-        val_set = FromNpyDataset(X_val_path, y_val_path,  is_unl = dataset=="unl", transform=transforms.ToTensor())
-        test_set = FromNpyDataset(X_test_path, y_test_path,  is_unl = dataset=="unl", transform=transforms.ToTensor())
+        train_set = FromNpyDataset(X_train_path, y_train_path, is_unl = "unl" in dataset, transform=transforms.ToTensor())
+        val_set = FromNpyDataset(X_val_path, y_val_path,  is_unl = "unl" in dataset, transform=transforms.ToTensor())
+        test_set = FromNpyDataset(X_test_path, y_test_path,  is_unl = "unl" in dataset, transform=transforms.ToTensor())
 
     else:
         
