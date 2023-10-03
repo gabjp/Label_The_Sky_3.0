@@ -71,7 +71,13 @@ def main():
     domain_3 = torch.load("experiments/pretrain_domain_3/checkpoint.pth")["model_state_dict"]
     domain_4 = torch.load("experiments/pretrain_domain_4/checkpoint.pth")["model_state_dict"]
     coefs = list(map(float, args.weights.split(",")))
-    load_dict = merge_state_dicts([domain_1,domain_2,domain_3,domain_4], coefs, coefs)
+    merged_dict = merge_state_dicts([domain_1,domain_2,domain_3,domain_4], coefs, coefs)
+    if args.load_fc == 1:
+        load_dict =  {k: merged_dict[k] for k in merged_dict.keys() if 'fc2' not in k}
+    elif args.load_fc == 0:
+        load_dict =  {k: merged_dict[k] for k in merged_dict.keys() if 'features' in k}
+    else:
+        load_dict = merged_dict
     model.load_state_dict(load_dict, strict=False)
 
     #train - WARMUP
