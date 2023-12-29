@@ -28,6 +28,7 @@ parser.add_argument('--w_momentum', default=0.9, type=float, help='warmup moment
 parser.add_argument('--w_weight_decay', default=0.0007, type=float, help='warmup weight decay')
 parser.add_argument('--w_epochs', default=10, type=int, help='warmup number of total epochs to run')
 parser.add_argument('--w_optimizer', default="adam", type=str, help="warmup otimizer algorithm")
+parser.add_argument('--schedule', default=1, type=int, help='scheduler')
 
 class CustomMAE(nn.Module):
     def __init__(self):
@@ -151,7 +152,7 @@ def main():
         total_samples = 0
         num_batch_count = 0
 
-        if n_epoch % 20 == 0 and n_epoch != 0:
+        if args.schedule == 1 and n_epoch % 20 == 0 and n_epoch != 0:
             if (n_epoch // 20) % 2 == 0:
                 opt.param_groups[0]["lr"] = opt.param_groups[0]["lr"] / 5
             else:

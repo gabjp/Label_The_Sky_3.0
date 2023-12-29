@@ -33,6 +33,8 @@ parser.add_argument('--inner-momentum', type=float, default=0.9) # Inner loop mo
 parser.add_argument('--outer-momentum', type=float, default=0.9) # Outer loop momentum
 parser.add_argument('--permutation', type=str, default='0,1,2,3')
 parser.add_argument('--dropout', type=float, default=0.3)
+parser.add_argument('--restrict', type=int, default=0) 
+
 
 
 
@@ -181,6 +183,9 @@ def main():
             with torch.no_grad():
                 grad = torch.autograd.grad(loss, coefs, create_graph=False)
 
+                if args.restrict == 1:
+                    grad = grad - torch.sum(grad)/4
+
                 #acc = accuracy(func, combined_weights, buffers, val_loader)
                 f1 = compute_f1_score(func, combined_weights, buffers, val_loader)
                 if f1 > best_f1:
@@ -198,6 +203,17 @@ def main():
                 print(f"outer gradient: {grad[0]}")
                 print(f"outer update: {outer_update}")    
                 coefs = coefs - args.outer_lr * outer_update
+                if args.restrict:
+                    r_count = 0
+                    r_accumulator = 0
+                    for c_i in range(len(coefs)):
+                        if coefs[c_i] < 0:
+                            r_count+=1
+                            r_accumulator += coefs[c_i]
+                            coefs[c_i] = 0
+                    for c_i in range(len(coefs)):
+                        if coefs[c_i] > 0:
+                            coefs[c_i] = coefs[c_i] + r_accumulator/(len(coefs)-r_count)
             
             coefs.requires_grad_(True)
             print()
