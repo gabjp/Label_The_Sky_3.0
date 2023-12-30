@@ -184,8 +184,7 @@ class VGG16(nn.Module):
   def forward(self, x):
     outs = []
     for i in range(12): 
-      chn = x[:,i,:,:]
-      print(chn.size())
+      chn = torch.unsqueeze(x[:,i,:,:],1)
       chn = self.features[i](chn)
       chn = torch.reshape(chn, (-1,48))
       chn = self.lin[i](chn)
