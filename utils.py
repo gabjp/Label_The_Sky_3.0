@@ -7,79 +7,191 @@ from sklearn.metrics import f1_score
 # Implementação da VGG16 com batch normalization e dropout.
 # Fonte: https://blog.paperspace.com/vgg-from-scratch-pytorch/
 
-class VGG16(nn.Module):
-  def __init__(self, num_classes = 3, dropout = 0.3):
-    super().__init__()
+# class VGG16(nn.Module):
+#   def __init__(self, num_classes = 3, dropout = 0.3):
+#     super().__init__()
 
-    self.features = nn.Sequential(
-        nn.Conv2d(12, 64, kernel_size=3, stride=1, padding=1),
-        nn.BatchNorm2d(64),
+#     self.features = nn.Sequential(
+#         nn.Conv2d(12, 64, kernel_size=3, stride=1, padding=1),
+#         nn.BatchNorm2d(64),
+#         nn.ReLU(),
+#         nn.Conv2d(64, 64, kernel_size=3, stride=1, padding=1),
+#         nn.BatchNorm2d(64),
+#         nn.ReLU(),
+#         nn.MaxPool2d(kernel_size=2, stride = 2),
+#         nn.Conv2d(64, 128, kernel_size=3, stride=1, padding=1),
+#         nn.BatchNorm2d(128),
+#         nn.ReLU(),
+#         nn.Conv2d(128, 128, kernel_size=3, stride=1, padding=1),
+#         nn.BatchNorm2d(128),
+#         nn.ReLU(),
+#         nn.MaxPool2d(kernel_size=2, stride = 2),
+#         nn.Conv2d(128, 256, kernel_size=3, stride=1, padding=1),
+#         nn.BatchNorm2d(256),
+#         nn.ReLU(),
+#         nn.Conv2d(256, 256, kernel_size=3, stride=1, padding=1),
+#         nn.BatchNorm2d(256),
+#         nn.ReLU(),
+#         nn.Conv2d(256, 256, kernel_size=3, stride=1, padding=1),
+#         nn.BatchNorm2d(256),
+#         nn.ReLU(),
+#         nn.MaxPool2d(kernel_size=2, stride = 2),
+#         nn.Conv2d(256, 512, kernel_size=3, stride=1, padding=1),
+#         nn.BatchNorm2d(512),
+#         nn.ReLU(),
+#         nn.Conv2d(512, 512, kernel_size=3, stride=1, padding=1),
+#         nn.BatchNorm2d(512),
+#         nn.ReLU(),
+#         nn.Conv2d(512, 512, kernel_size=3, stride=1, padding=1),
+#         nn.BatchNorm2d(512),
+#         nn.ReLU(),
+#         nn.MaxPool2d(kernel_size=2, stride = 2),
+#         nn.Conv2d(512, 512, kernel_size=3, stride=1, padding=1),
+#         nn.BatchNorm2d(512),
+#         nn.ReLU(),
+#         nn.Conv2d(512, 512, kernel_size=3, stride=1, padding=1),
+#         nn.BatchNorm2d(512),
+#         nn.ReLU(),
+#         nn.Conv2d(512, 512, kernel_size=3, stride=1, padding=1),
+#         nn.BatchNorm2d(512),
+#         nn.ReLU(),
+#         nn.MaxPool2d(kernel_size=2, stride = 2))
+
+#     # Camadas Fully Connected com menos parâmetros que a implementação original:
+
+#     self.fc = nn.Sequential(
+#         nn.Dropout(dropout),
+#         nn.Linear(512, 512),
+#         nn.ReLU())
+
+#     self.fc1 = nn.Sequential(
+#         nn.Dropout(dropout),
+#         nn.Linear(512, 512),
+#         nn.ReLU())
+
+#     self.fc2 = nn.Sequential(
+#         nn.Linear(512, num_classes))
+
+#   def forward(self, x):
+#     out = self.features(x)
+#     out = torch.reshape(out, (-1, 512))
+#     out = self.fc(out)
+#     out = self.fc1(out)
+#     out = self.fc2(out)
+#     return out
+
+def get_conv_path():
+
+  path = nn.Sequential(
+        nn.Conv2d(1, 6, kernel_size=3, stride=1, padding=1),
+        nn.BatchNorm2d(6),
         nn.ReLU(),
-        nn.Conv2d(64, 64, kernel_size=3, stride=1, padding=1),
-        nn.BatchNorm2d(64),
+        nn.Conv2d(6, 6, kernel_size=3, stride=1, padding=1),
+        nn.BatchNorm2d(6),
         nn.ReLU(),
         nn.MaxPool2d(kernel_size=2, stride = 2),
-        nn.Conv2d(64, 128, kernel_size=3, stride=1, padding=1),
-        nn.BatchNorm2d(128),
+        nn.Conv2d(6, 12, kernel_size=3, stride=1, padding=1),
+        nn.BatchNorm2d(12),
         nn.ReLU(),
-        nn.Conv2d(128, 128, kernel_size=3, stride=1, padding=1),
-        nn.BatchNorm2d(128),
-        nn.ReLU(),
-        nn.MaxPool2d(kernel_size=2, stride = 2),
-        nn.Conv2d(128, 256, kernel_size=3, stride=1, padding=1),
-        nn.BatchNorm2d(256),
-        nn.ReLU(),
-        nn.Conv2d(256, 256, kernel_size=3, stride=1, padding=1),
-        nn.BatchNorm2d(256),
-        nn.ReLU(),
-        nn.Conv2d(256, 256, kernel_size=3, stride=1, padding=1),
-        nn.BatchNorm2d(256),
+        nn.Conv2d(12, 12, kernel_size=3, stride=1, padding=1),
+        nn.BatchNorm2d(12),
         nn.ReLU(),
         nn.MaxPool2d(kernel_size=2, stride = 2),
-        nn.Conv2d(256, 512, kernel_size=3, stride=1, padding=1),
-        nn.BatchNorm2d(512),
+        nn.Conv2d(12, 24, kernel_size=3, stride=1, padding=1),
+        nn.BatchNorm2d(24),
         nn.ReLU(),
-        nn.Conv2d(512, 512, kernel_size=3, stride=1, padding=1),
-        nn.BatchNorm2d(512),
+        nn.Conv2d(24, 24, kernel_size=3, stride=1, padding=1),
+        nn.BatchNorm2d(24),
         nn.ReLU(),
-        nn.Conv2d(512, 512, kernel_size=3, stride=1, padding=1),
-        nn.BatchNorm2d(512),
+        nn.Conv2d(24, 24, kernel_size=3, stride=1, padding=1),
+        nn.BatchNorm2d(24),
         nn.ReLU(),
         nn.MaxPool2d(kernel_size=2, stride = 2),
-        nn.Conv2d(512, 512, kernel_size=3, stride=1, padding=1),
-        nn.BatchNorm2d(512),
+        nn.Conv2d(24, 48, kernel_size=3, stride=1, padding=1),
+        nn.BatchNorm2d(48),
         nn.ReLU(),
-        nn.Conv2d(512, 512, kernel_size=3, stride=1, padding=1),
-        nn.BatchNorm2d(512),
+        nn.Conv2d(48, 48, kernel_size=3, stride=1, padding=1),
+        nn.BatchNorm2d(48),
         nn.ReLU(),
-        nn.Conv2d(512, 512, kernel_size=3, stride=1, padding=1),
-        nn.BatchNorm2d(512),
+        nn.Conv2d(48, 48, kernel_size=3, stride=1, padding=1),
+        nn.BatchNorm2d(48),
+        nn.ReLU(),
+        nn.MaxPool2d(kernel_size=2, stride = 2),
+        nn.Conv2d(48, 48, kernel_size=3, stride=1, padding=1),
+        nn.BatchNorm2d(48),
+        nn.ReLU(),
+        nn.Conv2d(48, 48, kernel_size=3, stride=1, padding=1),
+        nn.BatchNorm2d(48),
+        nn.ReLU(),
+        nn.Conv2d(48, 48, kernel_size=3, stride=1, padding=1),
+        nn.BatchNorm2d(48),
         nn.ReLU(),
         nn.MaxPool2d(kernel_size=2, stride = 2))
-
-    # Camadas Fully Connected com menos parâmetros que a implementação original:
-
-    self.fc = nn.Sequential(
-        nn.Dropout(dropout),
-        nn.Linear(512, 512),
-        nn.ReLU())
-
-    self.fc1 = nn.Sequential(
-        nn.Dropout(dropout),
-        nn.Linear(512, 512),
-        nn.ReLU())
-
-    self.fc2 = nn.Sequential(
-        nn.Linear(512, num_classes))
-
-  def forward(self, x):
-    out = self.features(x)
-    out = torch.reshape(out, (-1, 512))
-    out = self.fc(out)
-    out = self.fc1(out)
-    out = self.fc2(out)
-    return out
   
+  return path
+
+def get_lin_path(dropout):
+  path = nn.Sequential(
+      nn.Dropout(dropout),
+      nn.Linear(48, 48),
+      nn.ReLU(),
+      nn.Dropout(dropout),
+      nn.Linear(48, 48),
+      nn.ReLU(),
+      nn.Linear(48, 1))
+  return path
+
+class VGG16(nn.Module):
+
+  def __init__(self, num_classes = 3, dropout = 0.3):
+    super().__init__()
+    self.features1 = get_conv_path()
+    self.features2 = get_conv_path()
+    self.features3 = get_conv_path()
+    self.features4 = get_conv_path()
+    self.features5 = get_conv_path()
+    self.features6 = get_conv_path()
+    self.features7 = get_conv_path()
+    self.features8 = get_conv_path()
+    self.features9 = get_conv_path()
+    self.features10 = get_conv_path()
+    self.features11 = get_conv_path()
+    self.features12 = get_conv_path()
+    self.features = [self.features1, self.features2, self.features3,
+                     self.features4, self.features5, self.features6,
+                     self.features7, self.features8, self.features9,
+                     self.features10, self.features11, self.features12]
+
+    if num_classes == 3:
+      pass
+    elif num_classes == 12:
+      self.lin1 = get_lin_path()
+      self.lin2 = get_lin_path()
+      self.lin3 = get_lin_path()
+      self.lin4 = get_lin_path()
+      self.lin5 = get_lin_path()
+      self.lin6 = get_lin_path()
+      self.lin7 = get_lin_path()
+      self.lin8 = get_lin_path()
+      self.lin9 = get_lin_path()
+      self.lin10 = get_lin_path()
+      self.lin11 = get_lin_path()
+      self.lin12 = get_lin_path()
+      self.lin = [self.lin1, self.lin2, self.lin3,
+                      self.lin4, self.lin5, self.lin6,
+                      self.lin7, self.lin8, self.lin9,
+                      self.lin10, self.lin11, self.lin12]
+  def forward(self, x):
+    outs = []
+    for i in range(12): 
+      chn = x[:,:,:,i]
+      chn = self.features[i](chn)
+      chn = torch.reshape(chn, (-1,48))
+      chn = self.lin[i](chn)
+      outs.append(chn)
+    
+    return torch.cat(outs, 1)
+
 def test(testloader, model, criterion, device):
   model.eval()
   epoch_loss = 0
