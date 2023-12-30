@@ -165,18 +165,18 @@ class VGG16(nn.Module):
     if num_classes == 3:
       pass
     elif num_classes == 12:
-      self.lin1 = get_lin_path()
-      self.lin2 = get_lin_path()
-      self.lin3 = get_lin_path()
-      self.lin4 = get_lin_path()
-      self.lin5 = get_lin_path()
-      self.lin6 = get_lin_path()
-      self.lin7 = get_lin_path()
-      self.lin8 = get_lin_path()
-      self.lin9 = get_lin_path()
-      self.lin10 = get_lin_path()
-      self.lin11 = get_lin_path()
-      self.lin12 = get_lin_path()
+      self.lin1 = get_lin_path(dropout)
+      self.lin2 = get_lin_path(dropout)
+      self.lin3 = get_lin_path(dropout)
+      self.lin4 = get_lin_path(dropout)
+      self.lin5 = get_lin_path(dropout)
+      self.lin6 = get_lin_path(dropout)
+      self.lin7 = get_lin_path(dropout)
+      self.lin8 = get_lin_path(dropout)
+      self.lin9 = get_lin_path(dropout)
+      self.lin10 = get_lin_path(dropout)
+      self.lin11 = get_lin_path(dropout)
+      self.lin12 = get_lin_path(dropout)
       self.lin = [self.lin1, self.lin2, self.lin3,
                       self.lin4, self.lin5, self.lin6,
                       self.lin7, self.lin8, self.lin9,
