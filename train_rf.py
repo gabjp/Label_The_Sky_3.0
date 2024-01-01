@@ -31,18 +31,18 @@ def hp_search(X, y):
 
     rf = RandomForestClassifier()
 
-    param_dist = {
-        'n_estimators': randint(50, 500),
-        'max_depth': [None] + list(randint(5, 50).rvs(4)),
-        'min_samples_split': randint(2, 20),
-        'min_samples_leaf': randint(1, 20)
-    }
+    param_dist = {'n_estimators': [100,200,300,400],
+               'min_samples_split': [2,5], # Retirei None
+               'min_samples_leaf': [1,2],  # Retirei None
+               'max_features': ["sqrt", 5, 10, 15], 
+               'max_depth': [i*10 for i in range(1,12)]+[None],
+               'bootstrap': [True, False]}
 
     skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
 
-    f1_scorer = make_scorer(f1_score, average='micro')
+    f1_scorer = make_scorer(f1_score, average='macro')
 
-    random_search = RandomizedSearchCV(estimator=rf, param_distributions=param_dist, n_iter=10, cv=skf, scoring=f1_scorer, random_state=42)
+    random_search = RandomizedSearchCV(estimator=rf, param_distributions=param_dist, n_iter=100, cv=skf, scoring=f1_scorer, random_state=42, verbose=1, n_jobs=-1)
     random_search.fit(X, y)
 
     best_params = random_search.best_params_
@@ -68,13 +68,13 @@ def main():
     nowise_pred_test = rf.predict(test_nowise.drop("target", axis=1))
 
     print("WISE VAL")
-    print(classification_report(val_wise["target"], wise_pred_val),digits = 4, target_names = ["QSO", "STAR", "GAL"])
+    print(classification_report(val_wise["target"], wise_pred_val,digits = 4, target_names = ["QSO", "STAR", "GAL"]))
     print("NO WISE VAL")
-    print(classification_report(val_nowise["target"], nowise_pred_val),digits = 4, target_names = ["QSO", "STAR", "GAL"])
+    print(classification_report(val_nowise["target"], nowise_pred_val,digits = 4, target_names = ["QSO", "STAR", "GAL"]))
     print("WISE TEST")
-    print(classification_report(test_wise["target"], wise_pred_test),digits = 4, target_names = ["QSO", "STAR", "GAL"])
+    print(classification_report(test_wise["target"], wise_pred_test,digits = 4, target_names = ["QSO", "STAR", "GAL"]))
     print("NO WISE TEST")
-    print(classification_report(test_nowise["target"], nowise_pred_test),digits = 4, target_names = ["QSO", "STAR", "GAL"])
+    print(classification_report(test_nowise["target"], nowise_pred_test,digits = 4, target_names = ["QSO", "STAR", "GAL"]))
 
     if not os.path.exists(args.save_dir):
         os.makedirs(args.save_dir)
