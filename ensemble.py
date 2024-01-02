@@ -92,8 +92,8 @@ def main():
     cnn_test_pred = out.cpu().numpy()
     test_true = labels.cpu().numpy()
 
-    rf_pred_val = rf.predict(val_nowise.drop("target", axis=1))
-    rf_pred_test = rf.predict(test_nowise.drop("target", axis=1))
+    rf_pred_val = rf.predict_proba(val_nowise.drop("target", axis=1))
+    rf_pred_test = rf.predict_proba(test_nowise.drop("target", axis=1))
 
     # Grid search
     print(val_true)
