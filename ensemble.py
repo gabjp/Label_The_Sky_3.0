@@ -53,9 +53,9 @@ def main():
 
     # Load CNN
     cnn = VGG16(3)
-    checkpoint = torch.load(args.cnn_path).to(device)
+    checkpoint = torch.load(args.cnn_path)
     load_dict = checkpoint['model_state_dict']
-    cnn.load_state_dict(load_dict, strict=False)
+    cnn.load_state_dict(load_dict, strict=False).to(device)
     cnn.eval()
 
     # Load RF
