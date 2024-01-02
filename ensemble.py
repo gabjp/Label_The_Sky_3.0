@@ -78,8 +78,8 @@ def main():
     images = torch.concat(image_list).to(device)
     labels = torch.concat(labels_list).to(device)
     out = cnn(images)
-    cnn_val_pred = torch.max(out, 1).cpu().numpy()
-    val_true = torch.max(labels, 1).cpu().numpy()
+    cnn_val_pred = out.cpu().numpy()
+    val_true = labels.cpu().numpy()
 
     image_list = []
     labels_list = []
