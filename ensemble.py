@@ -98,7 +98,7 @@ def main():
     labels = torch.concat(labels_list).to(device)
     out = cnn(images)
     cnn_pred_val = m(out).cpu().numpy()
-    val_true = torch.argmax(labels.cpu().numpy(), dim=1)
+    val_true = np.argmax(labels.cpu().numpy(), axis=1)
 
     image_list = []
     labels_list = []
@@ -109,7 +109,7 @@ def main():
     labels = torch.concat(labels_list).to(device)
     out = cnn(images)
     cnn_pred_test = m(out).cpu().numpy()
-    test_true = torch.argmax(labels.cpu().numpy(), dim=1)
+    test_true = np.argmax(labels.cpu().numpy(), axis=1)
 
     rf_pred_val = rf.predict_proba(val_nowise.drop("target", axis=1))
     rf_pred_test = rf.predict_proba(test_nowise.drop("target", axis=1))
