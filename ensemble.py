@@ -47,6 +47,28 @@ def load_csv():
 
     return train, val_wise, val_nowise, test_wise, test_nowise
 
+def search(rf_prob, vgg_prob, true):
+    max = 0
+    best_i = 0
+
+    for i in np.arange(0, 1 + 0.01, 0.01):
+        ensemble_prob = i * vgg_prob + (1-i)*rf_prob
+        ensempre_pred = np.argmax(ensemble_prob, axis=1)
+        score = f1_score(true, ensempre_pred, average='macro')
+
+        if score > max:
+            max = score
+            best_i = i
+
+    print(f"best i: {best_i}")
+
+    return best_i
+
+    ensemble_prob = best_i * vgg_prob + (1-best_i)*rf_prob
+    ensemble_pred = np.argmax(ensemble_prob, axis=1)
+
+    print(classification_report(true, ensemble_pred, digits = 6, target_names = ['QSO', 'STAR', 'GALAXY']))
+
 def main():
     args = parser.parse_args()
     print(args, flush=True)
@@ -98,15 +120,21 @@ def main():
     rf_pred_test = rf.predict_proba(test_nowise.drop("target", axis=1))
 
     # Grid search
-    m = nn.Softmax(dim=0)
+    
+    best_i = search(rf_pred_val, cnn_pred_val, val_true)
+    
+    for i in [0.5, best_i]:
+        print(i)
 
-    print(cnn_pred_val)
-    print(cnn_pred_test)
-    print(rf_pred_val)
-    print(rf_pred_test)
+        ensemble_prob = i * cnn_pred_val + (1-i)*rf_pred_val
+        ensemble_pred = np.argmax(ensemble_prob, axis=1)
+        print("VALIDATION")
+        print(classification_report(val_true, ensemble_pred, digits = 6, target_names = ['QSO', 'STAR', 'GALAXY']))
 
-    # Print Results
-    return 
+        ensemble_prob = i * cnn_pred_test + (1-i)*rf_pred_test
+        ensemble_pred = np.argmax(ensemble_prob, axis=1)
+        print("TEST")
+        print(classification_report(test_true, ensemble_pred, digits = 6, target_names = ['QSO', 'STAR', 'GALAXY']))
 
 if __name__ == "__main__":
     with torch.no_grad():
