@@ -105,4 +105,5 @@ def main():
     return 
 
 if __name__ == "__main__":
-    main()
+    with torch.no_grad():
+        main()
