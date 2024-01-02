@@ -78,7 +78,7 @@ def main():
     images = torch.concat(image_list).to(device)
     labels = torch.concat(labels_list).to(device)
     out = cnn(images)
-    cnn_val_pred = out.cpu().numpy()
+    cnn_pred_val = out.cpu().numpy()
     val_true = labels.cpu().numpy()
 
     image_list = []
@@ -89,17 +89,17 @@ def main():
     images = torch.concat(image_list).to(device)
     labels = torch.concat(labels_list).to(device)
     out = cnn(images)
-    cnn_test_pred = out.cpu().numpy()
+    cnn_pred_test = out.cpu().numpy()
     test_true = labels.cpu().numpy()
 
     rf_pred_val = rf.predict_proba(val_nowise.drop("target", axis=1))
     rf_pred_test = rf.predict_proba(test_nowise.drop("target", axis=1))
 
     # Grid search
-    print(val_true)
-    print(test_true)
-    print(val_nowise["target"])
-    print(test_nowise["target"])
+    print(cnn_pred_val)
+    print(cnn_pred_test)
+    print(rf_pred_val)
+    print(rf_pred_test)
 
     # Print Results
     return 
