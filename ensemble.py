@@ -96,8 +96,10 @@ def main():
     rf_pred_test = rf.predict_proba(test_nowise.drop("target", axis=1))
 
     # Grid search
-    print(cnn_pred_val)
-    print(cnn_pred_test)
+    m = nn.Softmax(dim=0)
+
+    print(m(cnn_pred_val))
+    print(m(cnn_pred_test))
     print(rf_pred_val)
     print(rf_pred_test)
 
