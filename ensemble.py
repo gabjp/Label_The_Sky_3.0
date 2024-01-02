@@ -70,7 +70,7 @@ def main():
 
     # Get preds
 
-    m = nn.Softmax(dim=0)
+    m = nn.Softmax(dim=1)
 
     image_list = []
     labels_list = []
