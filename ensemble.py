@@ -64,11 +64,6 @@ def search(rf_prob, vgg_prob, true):
 
     return best_i
 
-    ensemble_prob = best_i * vgg_prob + (1-best_i)*rf_prob
-    ensemble_pred = np.argmax(ensemble_prob, axis=1)
-
-    print(classification_report(true, ensemble_pred, digits = 6, target_names = ['QSO', 'STAR', 'GALAXY']))
-
 def main():
     args = parser.parse_args()
     print(args, flush=True)
@@ -103,7 +98,7 @@ def main():
     labels = torch.concat(labels_list).to(device)
     out = cnn(images)
     cnn_pred_val = m(out).cpu().numpy()
-    val_true = labels.cpu().numpy()
+    val_true = torch.argmax(labels.cpu().numpy(), dim=1)
 
     image_list = []
     labels_list = []
@@ -114,7 +109,7 @@ def main():
     labels = torch.concat(labels_list).to(device)
     out = cnn(images)
     cnn_pred_test = m(out).cpu().numpy()
-    test_true = labels.cpu().numpy()
+    test_true = torch.argmax(labels.cpu().numpy(), dim=1)
 
     rf_pred_val = rf.predict_proba(val_nowise.drop("target", axis=1))
     rf_pred_test = rf.predict_proba(test_nowise.drop("target", axis=1))
@@ -122,7 +117,7 @@ def main():
     # Grid search
     
     best_i = search(rf_pred_val, cnn_pred_val, val_true)
-    
+
     for i in [0.5, best_i]:
         print(i)
 
