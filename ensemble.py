@@ -69,7 +69,9 @@ def main():
     _, _, val_nowise, _, test_nowise = load_csv()
 
     # Get preds
-    
+
+    m = nn.Softmax(dim=0)
+
     image_list = []
     labels_list = []
     for image, label in val_loader:
@@ -78,7 +80,7 @@ def main():
     images = torch.concat(image_list).to(device)
     labels = torch.concat(labels_list).to(device)
     out = cnn(images)
-    cnn_pred_val = out.cpu().numpy()
+    cnn_pred_val = m(out).cpu().numpy()
     val_true = labels.cpu().numpy()
 
     image_list = []
@@ -89,7 +91,7 @@ def main():
     images = torch.concat(image_list).to(device)
     labels = torch.concat(labels_list).to(device)
     out = cnn(images)
-    cnn_pred_test = out.cpu().numpy()
+    cnn_pred_test = m(out).cpu().numpy()
     test_true = labels.cpu().numpy()
 
     rf_pred_val = rf.predict_proba(val_nowise.drop("target", axis=1))
@@ -98,8 +100,8 @@ def main():
     # Grid search
     m = nn.Softmax(dim=0)
 
-    print(m(cnn_pred_val))
-    print(m(cnn_pred_test))
+    print(cnn_pred_val)
+    print(cnn_pred_test)
     print(rf_pred_val)
     print(rf_pred_test)
 
